@@ -4,8 +4,8 @@ Welcome to **BookNook**, a modern, responsive, full-stack digital library applic
 
 ## 🌐 Live Website & Links
 - **Live Website URL**: [https://booknook-library.vercel.app](https://booknook-library.vercel.app)
-- **Client GitHub Repository**: [https://github.com/julkar929/booknook-client](https://github.com/your-username/booknook-client)
-- **Server GitHub Repository**: [https://github.com/julkar929/booknook-server](https://github.com/your-username/booknook-server)
+- **Client GitHub Repository**: [https://github.com/julkar929/booknook-clients](https://github.com/your-username/booknook-clients)
+- **Server GitHub Repository**: [https://github.com/julkar929/booknook-servers](https://github.com/your-username/booknook-servers)
 
 ---
 
