@@ -143,12 +143,12 @@ export const api = {
     });
   },
 
-  async googleAuth(data: { email: string; name: string; photoUrl?: string }) {
-    return request<{ success: boolean; message: string; token: string; user: User }>('/auth/google', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    });
-  },
+  // async googleAuth(data: { email: string; name: string; photoUrl?: string }) {
+  //   return request<{ success: boolean; message: string; token: string; user: User }>('/auth/google', {
+  //     method: 'POST',
+  //     body: JSON.stringify(data),
+  //   });
+  // },
 
   async getMe() {
     return request<{ success: boolean; user: User }>('/auth/me');
