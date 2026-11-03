@@ -3,7 +3,7 @@
 Welcome to **BookNook**, a modern, responsive, full-stack digital library application where book lovers can discover, borrow, return, and curate inspiring literature. Built on a simple yet timeless philosophy: **"Add a book, borrow a book, return a book."**
 
 ## 🌐 Live Website & Links
-- **Live Website URL**: [https://booknook-abc.vercel.app](https://booknook-library.vercel.app)
+- **Live Website URL**: [https://booknook-abc.vercel.app](https://booknook-abc.vercel.app)
 - **Client GitHub Repository**: [https://github.com/julkar929/booknook-clients](https://github.com/julkar929/booknook-clients)
 - **Server GitHub Repository**: [https://github.com/julkar929/booknook-servers](https://github.com/julkar929/booknook-servers)
 
