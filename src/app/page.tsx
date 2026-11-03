@@ -1,101 +1,113 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import HomeBannerSlider from "@/components/HomeBannerSlider";
+import HowBorrowingWorks from "@/components/HowBorrowingWorks";
+import ReaderReviews from "@/components/ReaderReviews";
+import BookCard from "@/components/BookCard";
+import LoadingSpinner from "@/components/LoadingSpinner";
+import { Book, api } from "@/lib/api";
+import { Sparkles, ArrowRight, Library } from "lucide-react";
+
+export default function HomePage() {
+  const [books, setBooks] = useState<Book[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    document.title = "BookNook | Home";
+
+    async function fetchNewArrivals() {
+      try {
+        setLoading(true);
+        // Load latest 6 books sorted by newest
+        const res = await api.getBooks({ limit: 6, sort: "newest" });
+        if (res.success && res.data) {
+          setBooks(res.data);
+        }
+      } catch (err) {
+        console.error("Failed to load new arrivals:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchNewArrivals();
+  }, []);
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="space-y-16 sm:space-y-24">
+      {/* 1. Hero Swiper Banner */}
+      <HomeBannerSlider />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      {/* 2. Dynamic New Arrivals Section */}
+      <section className="space-y-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <div className="space-y-2">
+            <div className="inline-flex items-center space-x-2 text-xs uppercase font-bold tracking-widest text-amber-600 dark:text-amber-400">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Fresh Off The Press</span>
+            </div>
+            <h2 className="font-serif text-3xl sm:text-4xl font-extrabold text-stone-900 dark:text-white">
+              New Arrivals
+            </h2>
+            <p className="text-sm text-stone-600 dark:text-stone-300 max-w-xl">
+              Explore the latest six literary discoveries recently cataloged by our passionate community curators.
+            </p>
+          </div>
+          <Link
+            href="/books"
+            className="hidden sm:inline-flex items-center space-x-2 text-sm font-semibold text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 group"
           >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <span>See All Books</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {/* Dynamic Books Grid or Loading */}
+        {loading ? (
+          <LoadingSpinner message="Fetching newest arrivals from the library..." />
+        ) : books.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {books.map((book) => (
+              <BookCard key={book._id} book={book} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-16 bg-stone-50 dark:bg-slate-900/50 rounded-3xl border border-stone-200 dark:border-slate-800">
+            <Library className="w-12 h-12 mx-auto text-stone-400 mb-3" />
+            <h3 className="font-serif text-lg font-bold text-stone-900 dark:text-white">
+              No books cataloged yet
+            </h3>
+            <p className="text-sm text-stone-500 mt-1 mb-4">
+              Be the first reader to add a book to our library!
+            </p>
+            <Link
+              href="/add-book"
+              className="px-5 py-2.5 rounded-xl bg-amber-600 text-white text-sm font-semibold shadow hover:bg-amber-700 transition-colors"
+            >
+              Add a Book
+            </Link>
+          </div>
+        )}
+
+        {/* "See All Books" button below cards */}
+        <div className="pt-4 flex justify-center">
+          <Link
+            href="/books"
+            className="inline-flex items-center space-x-2.5 px-8 py-3.5 rounded-2xl bg-stone-900 hover:bg-stone-800 dark:bg-slate-800 dark:hover:bg-slate-700 text-white font-medium text-sm sm:text-base shadow-md hover:shadow-lg transition-all group"
+          >
+            <span>See All Books</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </div>
+      </section>
+
+      {/* 3. Extra Section 1: How Borrowing Works */}
+      <HowBorrowingWorks />
+
+      {/* 4. Extra Section 2: Reader Reviews & Community Metrics */}
+      <ReaderReviews />
     </div>
   );
 }
